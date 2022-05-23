@@ -18,6 +18,7 @@ func main() {
 	case "csharp":
 		InstallDotnet(args[1])
 		InstallDotnetFormatter()
+		DotnetFormat()
 		break
 	default:
 		fmt.Fprintln(os.Stderr, "Invalid language provided")
@@ -40,5 +41,9 @@ func InstallDotnet(version string) {
 }
 
 func InstallDotnetFormatter() {
-	RunCmd("dotnet", "tool", "install", "--global", "dotnet-format", "--version", "5.1.250801")
+	RunCmd("/root/.dotnet/dotnet", "tool", "install", "--global", "dotnet-format", "--version", "5.1.250801")
+}
+
+func DotnetFormat() {
+	RunCmd("/root/.dotnet/dotnet", "format")
 }
