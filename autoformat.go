@@ -16,8 +16,6 @@ func main() {
 	}
 	switch args[0] {
 	case "csharp":
-		InstallDotnet(args[1])
-		InstallDotnetFormatter()
 		DotnetFormat()
 		break
 	default:
@@ -36,14 +34,6 @@ func RunCmd(name string, args ...string) {
 	fmt.Println(string(stdout))
 }
 
-func InstallDotnet(version string) {
-	RunCmd("/dotnet-install.sh", "-c", version)
-}
-
-func InstallDotnetFormatter() {
-	RunCmd("/root/.dotnet/dotnet", "tool", "install", "--global", "dotnet-format", "--version", "5.1.250801")
-}
-
 func DotnetFormat() {
-	RunCmd("/root/.dotnet/dotnet", "format")
+	RunCmd("dotnet", "format")
 }
