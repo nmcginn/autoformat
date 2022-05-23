@@ -11,9 +11,6 @@ jobs:
         uses: actions/checkout@v3
       - name: Test autoformat
         uses: ./ # Uses an action in the root directory
-        with:
-          language: "csharp"
-          version: "6.0"
       # # Use the output from the `hello` step
       # - name: Get the output time
       #   run: echo "The time was ${{ steps.hello.outputs.time }}"
