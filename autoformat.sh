@@ -2,6 +2,8 @@
 
 env # useful for debugging (pls remove)
 
+git config --global --add safe.directory /github/workspace
+
 dotnet format "$INPUT_PROJECT"
 
 set +e
