@@ -30,7 +30,7 @@ if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
     else
         echo "Not commenting, found comments from users $USER_COMMENTS"
     fi
-elif [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+elif [ "$GITHUB_EVENT_NAME" = "comment" ]; then
     echo "someone commented!"
 fi
 
