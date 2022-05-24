@@ -12,3 +12,5 @@ inputs:
 runs:
   using: "docker"
   image: "Dockerfile"
+  env:
+    PR_NUMBER: ${{ github.event.number }}
