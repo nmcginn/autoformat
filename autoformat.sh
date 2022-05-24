@@ -19,10 +19,11 @@ fi
 
 PR_NUMBER=`echo "$GITHUB_REF_NAME" | awk -F / '{print $1}'`
 
+COMMENTS_URL="$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments"
+COMMENTS=`curl -s -H "Authorization: token ${GITHUB_TOKEN}" -X GET "$COMMENTS_URL"`
+
 if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
     # check for existing comment
-    COMMENTS_URL="$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments"
-    COMMENTS=`curl -s -H "Authorization: token ${GITHUB_TOKEN}" -X GET "$COMMENTS_URL"`
     USER_COMMENTS=`echo "$COMMENTS" | jq '.[].user.login'`
     # make a comment if we haven't yet
     if [[ "$USER_COMMENTS" != *"github-actions"* ]]; then
@@ -31,7 +32,13 @@ if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
         echo "Not commenting, found comments from users $USER_COMMENTS"
     fi
 elif [ "$GITHUB_EVENT_NAME" = "comment" ]; then
-    echo "someone commented!"
+    # check if someone commented /format
+    FORMAT_COMMENT=`echo "$COMMENTS" | jq '.[].body' | grep "\"/format\""`
+    if [ -n "$FORMAT_COMMENT" ]; then
+        # hold on to your butts
+        git commit -am "autoformat"
+        git push
+    fi
 fi
 
 # echo "TODO: git branch, make a pull request, comment on existing pull request"
