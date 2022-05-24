@@ -31,7 +31,7 @@ if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
     else
         echo "Not commenting, found comments from users $USER_COMMENTS"
     fi
-elif [ "$GITHUB_EVENT_NAME" = "comment" ]; then
+elif [ "$GITHUB_EVENT_NAME" = "issue_comment" ]; then
     # check if someone commented /format
     FORMAT_COMMENT=`echo "$COMMENTS" | jq '.[].body' | grep "\"/format\""`
     if [ -n "$FORMAT_COMMENT" ]; then
