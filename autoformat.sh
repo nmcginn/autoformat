@@ -2,7 +2,7 @@
 
 env # useful for debugging (pls remove)
 
-dotnet format
+dotnet format "$INPUT_PROJECT"
 
 set +e
 git diff-index HEAD # potentially useful for troubleshooting
