@@ -22,8 +22,16 @@ PR_NUMBER=`echo "$GITHUB_REF_NAME" | awk -F / '{print $1}'`
 if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
     # check for existing comment
     COMMENTS_URL="$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments"
+    COMMENTS=`curl -s -H "Authorization: token ${GITHUB_TOKEN}" -X GET "$COMMENTS_URL"`
+    USER_COMMENTS=`echo "$COMMENTS" | jq '.[].user.login'`
     # make a comment if we haven't yet
-    curl -s -H "Authorization: token ${GITHUB_TOKEN}" -X POST -d '{"body": "Your pull request appears to have improperly formatted C# code! Please comment with\n\n```bash\n/format\n```\n\nand I will format your code for you!"}' "$COMMENTS_URL"
+    if [[ "$USER_COMMENTS" != *"github-actions"* ]]; then
+        curl -s -H "Authorization: token ${GITHUB_TOKEN}" -X POST -d '{"body": "Your pull request appears to have improperly formatted C# code! Please comment with\n\n```bash\n/format\n```\n\nand I will format your code for you!"}' "$COMMENTS_URL"
+    else
+        echo "Not commenting, found comments from users $USER_COMMENTS"
+    fi
+elif [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+    echo "someone commented!"
 fi
 
 # echo "TODO: git branch, make a pull request, comment on existing pull request"
