@@ -1,15 +1,11 @@
 # action.yml
-name: "Code Formatter"
-description: "Detect & correct unformatted code"
-# inputs:
-#   language:
-#     description: "What language to autoformat code for"
-#     required: true
-#     default: "csharp"
-#   version:
-#     description: "What version of the language to use"
-#     required: true
-#     default: "6.0"
+name: ".NET Formatter"
+description: "Detect & correct unformatted .NET code"
+inputs:
+  project:
+    description: "The path to your .NET project"
+    required: true
+    default: "."
 # outputs:
 #   time: # id of output
 #     description: "The time we greeted you"

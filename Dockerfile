@@ -1,6 +1,6 @@
 FROM ubuntu:latest as runtime
 
-RUN apt update && apt install curl wget libicu70 -y
+RUN apt update && apt install curl wget libicu70 git jq -y
 
 COPY *.sh /
 
