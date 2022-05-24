@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 
-env # let's see what's available
-
-
 dotnet format
 
 set +e
+git diff-index HEAD # potentially useful for troubleshooting
 git diff-index --quiet HEAD
 STATUS=$?
 set -e
