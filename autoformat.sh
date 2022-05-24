@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+env # useful for debugging (pls remove)
+
 dotnet format
 
 set +e
